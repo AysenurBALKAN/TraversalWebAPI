@@ -31,6 +31,14 @@ namespace TraversalWebAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TraversalWebAPI", Version = "v1" });
             });
+
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("TraversalApiCors", opts =>
+                 {
+                     opts.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                 });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,7 +52,7 @@ namespace TraversalWebAPI
             }
 
             app.UseRouting();
-
+            app.UseCors("TraversalApiCors");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
